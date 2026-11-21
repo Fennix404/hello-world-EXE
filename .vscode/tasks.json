@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Windows EXE",
+            "type": "shell",
+            "command": "Remove-Item *.class -ErrorAction SilentlyContinue; javac *.java; if ($LASTEXITCODE -eq 0) { New-Item -ItemType Directory -Force -Path input | Out-Null; jar --create --file input/HelloEXE.jar --main-class HelloEXE *.class; Remove-Item -Recurse -Force HelloEXE -ErrorAction SilentlyContinue; jpackage --input input --name HelloEXE --main-jar HelloEXE.jar --main-class HelloEXE --type app-image --icon icon.ico; Write-Host 'BUILD SUCCEEDED!' -ForegroundColor Green }",
+            "options": {
+                "shell": {
+                    "executable": "powershell.exe",
+                    "args": ["-NoProfile", "-Command"]
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
